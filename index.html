@@ -13,6 +13,8 @@ var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 d3.json("graph.json").then(function(graph) {
 
+graph.links = graph.links.filter(function(link) { return link.target > 99; });
+
 var label = {
     'nodes': [],
     'links': []
@@ -90,7 +92,7 @@ var node = container.append("g").attr("class", "nodes")
     .enter()
     .append("circle")
     .attr("r", 5)
-	.attr("fill", function(d) { return color(d.group); });
+	.attr("fill", function(d) { return color(d.group/10); });
 
 
 node.on("mouseover", focus).on("mouseout", unfocus);
