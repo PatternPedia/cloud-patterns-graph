@@ -231,12 +231,14 @@ function focus(d) {
     link.style("opacity", function(o) {
         return o.source.index == index || o.target.index == index ? 1 : 0.1;
     });
+   groups.style("opacity", 0.1);
 }
 
 function unfocus() {
    labelNode.attr("display", "block");
    node.style("opacity", 1);
    link.style("opacity", 1);
+   groups.style("opacity", 1);
 }
 
 function updateLink(link) {
