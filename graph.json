@@ -2173,6 +2173,68 @@
             "description":	"des"
     	}
     ],
+    "groups": [
+        {							
+            "id":	63,
+            "name":	"Hybrid Cloud Applications"
+        },	
+        {							
+            "id":	62,
+            "name":	"Native Cloud Applications"
+        },	
+        {							
+            "id":	44,
+            "name":	"Multi-Tenancy"
+        },	
+        {							
+            "id":	45,
+            "name":	"Cloud Integration"
+        },	
+        {							
+            "id":	43,
+            "name":	"Cloud Application Components"
+        },	
+        {							
+            "id":	22,
+            "name":	"Application Workloads"
+        },	
+        {							
+            "id":	23,
+            "name":	"Cloud Service Models "
+        },	
+        {							
+            "id":	24,
+            "name":	"Cloud Deployment Models"
+        },	
+        {							
+            "id":	33,
+            "name":	"Cloud Environments"
+        },	
+        {							
+            "id":	34,
+            "name":	"Processing Offerings"
+        },	
+        {							
+            "id":	35,
+            "name":	"Storage Offerings"
+        },	
+        {							
+            "id":	36,
+            "name":	"Communication Offerings"
+        },	
+        {							
+            "id":	52,
+            "name":	"Management Components "
+        },	
+        {							
+            "id":	53,
+            "name":	"Management Processes"
+        }	,	
+        {							
+            "id":	42,
+            "name":	"Fundamental Cloud Architectures"
+        }	
+    ],
     "directed": false,
     "multigraph": false
 }
