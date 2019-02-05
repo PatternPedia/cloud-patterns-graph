@@ -1,14 +1,31 @@
 <html>
+    <head>
+        <style>
+            #steuerung {
+                width: 50px;
+                float:left;
+            }
+            #zweite_spalte {
+                margin-left: 60px;
+            }
+        </style>
+    </head>
 <body style="font-family: Arial, Helvetica, sans-serif">
     <h1>Cloud Computing Patterns</h1>
-    <svg id='viz'></svg>
-    <p>based on the work of <a href="https://bl.ocks.org/mapio/53fed7d84cd1812d6a6639ed7aa83868">Massimo Santini</a> | Released under the <a href="https://opensource.org/licenses/GPL-3.0">GNU General Public License</a></p>
+    <div id="wrapper">
+        <div id="steuerung">
+            Groups:
+        </div>
+        <div id="zweite_spalte">
+            <svg id='viz'></svg>
+        </div>
+    </div>
 </body>
 
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script>
 var width = window.innerWidth;
-var height = window.innerHeight-130;
+var height = window.innerHeight-80;
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 d3.json("graph.json").then(function(graph) {
@@ -54,12 +71,15 @@ function neigh(a, b) {
     return a == b || adjlist[a + "-" + b];
 }
 
+var ul = d3.select('#steuerung').append('ul');
 
 var svg = d3.select("#viz").attr("width", width).attr("height", height);
 var container = svg.append("g");
 
 
 var groups = container.append("g").attr('class', 'groups');
+
+
 
 
 
@@ -73,6 +93,14 @@ var groupIds = d3.set(graph.nodes.map(function(n) { return +n.group; }))
     })
     .filter( function(group) { return group.count > 2;})
     .map( function(group) { return group.groupId; });
+
+
+ul.selectAll('li')
+.data(groupIds)
+.enter()
+.append('li')
+.html(String)
+.on("mouseover", focusgroup).on("mouseout", unfocus);
 
 var paths = groups.selectAll('.path_placeholder')
     .data(groupIds, function(d) { return +d; })
@@ -234,11 +262,29 @@ function focus(d) {
    groups.style("opacity", 0.1);
 }
 
+
+function focusgroup(group_id) {
+    node.style("opacity", function(o) {
+        return o.group == group_id ? 1 : 0.1;
+    });
+    labelNode.attr("display", function(o) {
+        return o.node.group == group_id ? "block" : "none";
+    });
+    //hide all nodes
+    link.style("opacity", function(o) {
+        return 0.1;
+    });
+    groups.selectAll('.path_placeholder').style("opacity", function(o) {
+
+        return o == group_id ? 1 : 0.1;
+    });
+}
+
 function unfocus() {
    labelNode.attr("display", "block");
    node.style("opacity", 1);
    link.style("opacity", 1);
-   groups.style("opacity", 1);
+   groups.selectAll('.path_placeholder').style("opacity", 1);
 }
 
 function updateLink(link) {
