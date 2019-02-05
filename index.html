@@ -2,11 +2,12 @@
     <head>
         <style>
             #steuerung {
-                width: 50px;
+                width: 200px;
                 float:left;
+                font-size: 12px;
             }
             #zweite_spalte {
-                margin-left: 60px;
+                margin-left: 200px;
             }
         </style>
     </head>
@@ -96,11 +97,11 @@ var groupIds = d3.set(graph.nodes.map(function(n) { return +n.group; }))
 
 
 ul.selectAll('li')
-.data(groupIds)
-.enter()
-.append('li')
-.html(String)
-.on("mouseover", focusgroup).on("mouseout", unfocus);
+    .data(graph.groups)
+    .enter()
+    .append('li')
+    .html(function(d, i) { return  d.name; })
+    .on("mouseover", focusgroup).on("mouseout", unfocus);
 
 var paths = groups.selectAll('.path_placeholder')
     .data(groupIds, function(d) { return +d; })
@@ -264,11 +265,12 @@ function focus(d) {
 
 
 function focusgroup(group_id) {
+    console.log(group_id);
     node.style("opacity", function(o) {
-        return o.group == group_id ? 1 : 0.1;
+        return o.group == group_id.id ? 1 : 0.1;
     });
     labelNode.attr("display", function(o) {
-        return o.node.group == group_id ? "block" : "none";
+        return o.node.group == group_id.id ? "block" : "none";
     });
     //hide all nodes
     link.style("opacity", function(o) {
@@ -276,7 +278,7 @@ function focusgroup(group_id) {
     });
     groups.selectAll('.path_placeholder').style("opacity", function(o) {
 
-        return o == group_id ? 1 : 0.1;
+        return o == group_id.id ? 1 : 0.1;
     });
 }
 
