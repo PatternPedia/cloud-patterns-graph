@@ -133,7 +133,7 @@ var node = container.append("g").attr("class", "nodes")
     .enter()
     .append("circle")
     .attr("r", 5)
-	.attr("fill", function(d) { return color(d.group/10); });
+	.attr("fill", function(d) { return color(d.group); });
 
 
 node.on("mouseover", focus).on("mouseout", unfocus);
