@@ -1,6 +1,5 @@
 # Cloud Patterns Graph
-based on the work of https://github.com/cloudcomputingpatterns
-
+accessible under: https://patternpedia.github.io/cloud-patterns-graph/
 
 ## Setup
 Start a simple HTTP Server(e.g. "python -m SimpleHTTPServer") and access the URL_OF_THE_SERVER/index.html.
@@ -14,3 +13,5 @@ Start a simple HTTP Server(e.g. "python -m SimpleHTTPServer") and access the URL
 * visual grouping of patterns
 * table of content about all patterns
 * pattern search
+
+based on the work of https://github.com/cloudcomputingpatterns
