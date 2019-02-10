@@ -8,6 +8,7 @@
             }
             #zweite_spalte {
                 margin-left: 200px;
+                border-left: 1px solid black;
             }
         </style>
     </head>
@@ -15,7 +16,12 @@
     <h1>Cloud Computing Patterns</h1>
     <div id="wrapper">
         <div id="steuerung">
-            Groups:
+            <input type="text" id="myInput" placeholder="Search for patterns...">
+            <hr>
+                Groups:
+                <div id="pattern-list" style="overflow:scroll; height:89%;">
+
+                </div>
         </div>
         <div id="zweite_spalte">
             <svg id='viz'></svg>
@@ -25,7 +31,7 @@
 
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script>
-var width = window.innerWidth;
+var width = window.innerWidth-200;
 var height = window.innerHeight-80;
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -48,6 +54,42 @@ graph.nodes.forEach(function(d, i) {
         target: i * 2 + 1
     });
 });
+
+d3.select("#myInput").on("keyup", function(d) { 
+    
+    var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = d3.select("#myInput").node().value.toUpperCase();
+  ul = d3.select("#myUL").node();
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    txtValue = li[i].textContent || li[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+    
+    
+    var inputvalue = d3.select("#myInput").node().value;
+    console.log("value: " + inputvalue);
+    var results = graph.nodes.filter(node => node.name.toUpperCase().startsWith(inputvalue.toUpperCase()));
+  
+    
+    if(results.length == 1) {
+        console.log("result: " + results[0].id);
+        focus(results[0]);
+    }
+    else {
+        unfocus();
+    }
+                //console.log("keypress", d3.event); // also tried "keyup", "keydown", "key"
+})
+
+
 
 var labelLayout = d3.forceSimulation(label.nodes)
     .force("charge", d3.forceManyBody().strength(-50))
@@ -72,7 +114,8 @@ function neigh(a, b) {
     return a == b || adjlist[a + "-" + b];
 }
 
-var ul = d3.select('#steuerung').append('ul');
+var ul = d3.select('#pattern-list').append('ul')
+    .attr('id', 'myUL');
 
 var svg = d3.select("#viz").attr("width", width).attr("height", height);
 var container = svg.append("g");
@@ -96,12 +139,26 @@ var groupIds = d3.set(graph.nodes.map(function(n) { return +n.group; }))
     .map( function(group) { return group.groupId; });
 
 
+
+
 ul.selectAll('li')
     .data(graph.groups)
     .enter()
     .append('li')
-    .html(function(d, i) { return  d.name; })
-    .on("mouseover", focusgroup).on("mouseout", unfocus);
+    .text(function(d, i) { return  d.name; })
+    .on("mouseenter", focusgroup).on("mouseout", unfocus)
+    .append("ul")
+	            .selectAll("li")
+	            .data(function (d, i) {
+	            return graph.nodes.filter(node => node.group== d.id);
+	        })
+	            .enter()
+	            .append("li")
+	            .text(function (d, i) {
+	            return d.name;})
+                .on("mouseenter", focus).on("mouseout", unfocus);
+
+
 
 var paths = groups.selectAll('.path_placeholder')
     .data(groupIds, function(d) { return +d; })
@@ -250,7 +307,9 @@ function fixna(x) {
 }
 
 function focus(d) {
-    var index = d3.select(d3.event.target).datum().index;
+    console.log(d);
+    var index = d.index;
+    console.log("test: "  + index);
     node.style("opacity", function(o) {
         return neigh(index, o.index) ? 1 : 0.1;
     });
@@ -260,12 +319,14 @@ function focus(d) {
     link.style("opacity", function(o) {
         return o.source.index == index || o.target.index == index ? 1 : 0.1;
     });
-   groups.style("opacity", 0.1);
+   groups.selectAll('.path_placeholder').style("opacity", function(o) {
+        return 0.1;
+   });
 }
 
 
 function focusgroup(group_id) {
-    console.log(group_id);
+    console.log("group: " + group_id.id);
     node.style("opacity", function(o) {
         return o.group == group_id.id ? 1 : 0.1;
     });
@@ -283,6 +344,7 @@ function focusgroup(group_id) {
 }
 
 function unfocus() {
+    console.log("unfocus");
    labelNode.attr("display", "block");
    node.style("opacity", 1);
    link.style("opacity", 1);
