@@ -1,0 +1,13 @@
+#steuerung {
+    width: 300px;
+    float:left;
+    font-size: 12px;
+}
+#zweite_spalte {
+    margin-left: 300px;
+    border-left: 1px solid black;
+}
+#pattern-list {
+  overflow:scroll;
+  height:89%;
+}
