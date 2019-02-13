@@ -105,6 +105,7 @@ ul.selectAll('li')
         .append("li")
           .attr("style","margin-left: -2.5rem;")
           .on("mouseover", show_node_via_object).on("mouseout", show_all)
+          .on("click",click_checkbox)
           .append("input")
             .attr("type", "checkbox")
             .attr("class", "cb_pattern")
@@ -385,6 +386,18 @@ function show_selected() {
             show_linked_nodes_of_node(cb.attr("id"));
           }
         });
+}
+
+function click_checkbox(label){
+    var check=document.getElementsByTagName('input');
+    for(var i=0;i<check.length;i++)
+    {
+     if(check[i].type=='checkbox' && check[i].id==label.index)
+     {
+      check[i].checked=!check[i].checked;
+     }
+    }
+    show_selected();
 }
 
 function cb_is_not_checked(){
