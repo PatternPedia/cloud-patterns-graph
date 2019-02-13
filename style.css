@@ -14,3 +14,6 @@
 li{
     cursor: default;
 }
+#ul_patterns {
+    padding-left: 0.4rem;
+}

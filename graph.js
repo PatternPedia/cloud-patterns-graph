@@ -90,15 +90,18 @@ var groupIds = d3.set(graph.nodes.map(function(n) { return +n.group; }))
 
 var ul = d3.select('#pattern-list')
            .append('ul')
-           .attr('id', 'ul_patterns');
+           .attr('id', 'ul_patterns')
 ul.selectAll('li')
     .data(graph.groups)
     .enter()
     .append('li')
-      .text(function(d, i) { return  d.name; })
       .on("mouseenter", show_group_of_node).on("mouseout", show_all)
+      .append("span")
+        .text(function(d, i) { return "+ " + d.name; })
+        .on("click",collapse_pattern_of_group)
+      .select(function() { return this.parentNode; })
       .append("ul")
-        .attr("style","list-style: none;")
+        .attr("style","list-style: none; display: none;")
 	      .selectAll("li")
 	      .data(function (d, i) {return graph.nodes.filter(node => node.group== d.id);})
         .enter()
@@ -183,13 +186,7 @@ node.call(
         .on("drag", dragged)
         .on("end", dragended)
 );
-
-function onclickNode(d) {
-  console.log("click node: " + d.name);
-  click_checkbox(d);
-  
-}
-
+ 
 var labelNode = container.append("g").attr("class", "labelNodes")
     .selectAll("text")
     .data(label.nodes)
@@ -201,6 +198,30 @@ var labelNode = container.append("g").attr("class", "labelNodes")
     .style("font-size", 12)
     .style("pointer-events", "none");
 
+function onclickNode(d) {
+    console.log("click node: " + d.name);
+    click_checkbox(d);
+}
+
+function collapse_pattern_of_group(group) {
+    var element = document.getElementsByTagName("li");
+    var counter = 0;
+    for(counter = 0; counter < element.length; counter++){
+
+
+        if(element[counter].innerHTML.includes(group.name))
+        {
+            content = element[counter].children[1];
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+ 
+    }
+
+}
 
 function ticked() {
     node.call(updateNode);
@@ -394,14 +415,14 @@ function show_selected() {
 //------------------------------------------------------
 
 function click_checkbox(label){
-    var check=document.getElementsByTagName('input');
-    for(var i=0;i<check.length;i++)
-    {
-     if(check[i].type=='checkbox' && check[i].id==label.index)
-     {
-      check[i].checked=!check[i].checked;
-     }
-    }
+  var check=document.getElementsByTagName('input');
+  for(var i=0;i<check.length;i++)
+  {
+   if(check[i].type=='checkbox' && check[i].id==label.index)
+   {
+    check[i].checked=!check[i].checked;
+   }
+  }
     show_selected();
 }
 
