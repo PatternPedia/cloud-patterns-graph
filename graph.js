@@ -185,8 +185,9 @@ node.call(
 );
 
 function onclickNode(d) {
-  console.log("click node: " + d.id);
-  //TODO
+  console.log("click node: " + d.name);
+  click_checkbox(d);
+  
 }
 
 var labelNode = container.append("g").attr("class", "labelNodes")
@@ -387,6 +388,10 @@ function show_selected() {
           }
         });
 }
+
+//------------------------------------------------------
+//#           CHECKBOX FUNCTIONS                       #
+//------------------------------------------------------
 
 function click_checkbox(label){
     var check=document.getElementsByTagName('input');
