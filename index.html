@@ -2,12 +2,12 @@
     <head>
         <style>
             #steuerung {
-                width: 200px;
+                width: 300px;
                 float:left;
                 font-size: 12px;
             }
             #zweite_spalte {
-                margin-left: 200px;
+                margin-left: 300px;
                 border-left: 1px solid black;
             }
         </style>
@@ -110,9 +110,6 @@ graph.links.forEach(function(d) {
     adjlist[d.target.index + "-" + d.source.index] = true;
 });
 
-function neigh(a, b) {
-    return a == b || adjlist[a + "-" + b];
-}
 
 var ul = d3.select('#pattern-list').append('ul')
     .attr('id', 'myUL');
@@ -146,18 +143,31 @@ ul.selectAll('li')
     .enter()
     .append('li')
     .text(function(d, i) { return  d.name; })
-    .on("mouseenter", focusgroup).on("mouseout", unfocus)
+    .on("mouseenter", show_group_of_node).on("mouseout", show_all)
     .append("ul")
+    .attr("style","list-style: none;")
 	            .selectAll("li")
 	            .data(function (d, i) {
-	            return graph.nodes.filter(node => node.group== d.id);
-	        })
+	            return graph.nodes.filter(node => node.group== d.id);})
+
 	            .enter()
 	            .append("li")
+    .attr("style","margin-left: -2.5rem;")
+              .on("mouseover", show_node_via_object).on("mouseout", show_all)
+              .append("input")
+              .attr("type", "checkbox")
+              .attr("class", "myCheckbox")
+              .on("change",show_selected)
+              .attr("id", function (d, i) {
+	            return d.index;})
+              .select(function() { return this.parentNode; })
+              .append("span")
 	            .text(function (d, i) {
 	            return d.name;})
-                .on("mouseenter", focus).on("mouseout", unfocus);
+              ;
 
+//ul.selectAll('li').append("span").text(function (d, i) {
+	//            return d.name;});
 
 
 var paths = groups.selectAll('.path_placeholder')
@@ -219,10 +229,11 @@ var node = container.append("g").attr("class", "nodes")
     .enter()
     .append("circle")
     .attr("r", 5)
-	.attr("fill", function(d) { return color(d.group); });
+	.attr("fill", function(d) { return color(d.group); })
+  .on("click", onclickNode);
 
 
-node.on("mouseover", focus).on("mouseout", unfocus);
+node.on("mouseover", show_node_via_object).on("mouseout", show_all);
 
 node.call(
     d3.drag()
@@ -230,6 +241,11 @@ node.call(
         .on("drag", dragged)
         .on("end", dragended)
 );
+
+function onclickNode(d) {
+  console.log("click node: " + d.id); 
+
+}
 
 var labelNode = container.append("g").attr("class", "labelNodes")
     .selectAll("text")
@@ -306,50 +322,6 @@ function fixna(x) {
     return 0;
 }
 
-function focus(d) {
-    console.log(d);
-    var index = d.index;
-    console.log("test: "  + index);
-    node.style("opacity", function(o) {
-        return neigh(index, o.index) ? 1 : 0.1;
-    });
-    labelNode.attr("display", function(o) {
-      return neigh(index, o.node.index) ? "block": "none";
-    });
-    link.style("opacity", function(o) {
-        return o.source.index == index || o.target.index == index ? 1 : 0.1;
-    });
-   groups.selectAll('.path_placeholder').style("opacity", function(o) {
-        return 0.1;
-   });
-}
-
-
-function focusgroup(group_id) {
-    console.log("group: " + group_id.id);
-    node.style("opacity", function(o) {
-        return o.group == group_id.id ? 1 : 0.1;
-    });
-    labelNode.attr("display", function(o) {
-        return o.node.group == group_id.id ? "block" : "none";
-    });
-    //hide all nodes
-    link.style("opacity", function(o) {
-        return 0.1;
-    });
-    groups.selectAll('.path_placeholder').style("opacity", function(o) {
-
-        return o == group_id.id ? 1 : 0.1;
-    });
-}
-
-function unfocus() {
-    console.log("unfocus");
-   labelNode.attr("display", "block");
-   node.style("opacity", 1);
-   link.style("opacity", 1);
-   groups.selectAll('.path_placeholder').style("opacity", 1);
-}
 
 function updateLink(link) {
     link.attr("x1", function(d) { return fixna(d.source.x); })
@@ -401,6 +373,118 @@ function group_dragended(groupId) {
   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
   d3.select(this).select('path').style('stroke-width', 1);
 }
+
+
+
+
+function show_all() {
+  if(cb_is_not_checked()==true)
+  {
+   console.log("show all");
+   labelNode.attr("display", "block");
+   node.style("opacity", 1);
+   link.style("opacity", 1);
+   groups.selectAll('.path_placeholder').style("opacity", 1);
+}}
+
+function hide_all() {
+   
+  console.log("hide all");
+   labelNode.attr("display", "none");
+   node.style("opacity", 0.1);
+   link.style("opacity", 0.1);
+   groups.selectAll('.path_placeholder').style("opacity", 0.1);
+}
+
+function show_node_via_object(node) {
+  if(cb_is_not_checked())
+  {
+  hide_all();
+  show_node_with_links(node);
+  }
+}
+
+function show_node_with_links(node) {
+  show_node(node.index);
+  show_linked_nodes_of_node(node.index);
+}
+
+function show_node(selected_node) {
+  console.log("show node: " + selected_node);
+  node.filter(n => n.index == selected_node).style("opacity" ,1);
+  labelNode.filter(n => n.node.index == selected_node).attr("display", "block");
+}
+
+function show_linked_nodes_of_node(selected_node) {
+  //show related links
+  console.log("show related linkes of nodes");  
+  /*link.selectAll.forEach(function(o) {
+        if(o.source.index == selected_node || o.target.index == selected_node) {
+          if(o.source.index == selected_node) {
+            show_node(o.target.index);
+          }
+          else 
+          {
+            show_node(o.source.index);
+          }
+        }
+    }); */
+    graph.links.filter(l => l.source.index == selected_node || l.target.index == selected_node).forEach(function(d) 
+  {
+      if(d.source.index == selected_node) {
+        show_node(d.target.index);
+      }      
+      else if(d.target.index == selected_node) {
+        show_node(d.source.index);
+      }
+    });
+
+    link.filter(o => o.source.index == selected_node || o.target.index == selected_node).style("opacity", "1");   
+}
+
+function show_group_of_node(selected_node) {
+  if(cb_is_not_checked()){
+    hide_all();
+    var group_id =graph.nodes.filter(n => n.index == selected_node.id)[0].group;
+    groups.selectAll('.path_placeholder').filter(g => g == group_id).style("opacity", "1");
+    graph.nodes.filter(n => n.group == group_id).forEach(function(d) 
+    {
+      show_node(d.index);
+    });
+  }
+
+}
+
+function show_selected() {
+  hide_all();
+  d3.selectAll(".myCheckbox").each(function(d){
+          cb = d3.select(this);
+          if(cb.property("checked")){
+            show_node(cb.attr("id"));
+            show_linked_nodes_of_node(cb.attr("id"));
+          }
+        });
+}
+
+function cb_is_not_checked(){
+  var counter = 0;
+  d3.selectAll(".myCheckbox").each(function(d){
+          cb = d3.select(this);
+          if(cb.property("checked")){
+            counter++;
+          }
+        });
+ return counter==0 ? true : false;
+}
+
+
+
+
+
+
+
+
+
 
 
 }); // d3.json
