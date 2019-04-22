@@ -2,7 +2,21 @@ var width = window.innerWidth-300;
 var height = window.innerHeight-80;
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-d3.json("graph.json").then(function(graph) {
+var file = "test";
+var parameterFragments = location.search.substr(1).split("&");
+console.log(parameterFragments[0].length)
+if(parameterFragments[0].length == 0 || parameterFragments[0].split("=")[0] != "source")
+{
+  file = "graph.json"
+  console.log("graph set to default: " + file)
+}
+else{
+  var temp = parameterFragments[0].split("=");
+  file = unescape(temp[1]);
+  console.log("graph set choosen: " + file)
+}
+
+d3.json(file).then(function(graph) {
 
 var linksToCategory = graph.links.filter(function(link) { return link.target > 99; });
 
@@ -97,7 +111,7 @@ ul.selectAll('li')
     .append('li')
       .on("mouseenter", show_group_of_node).on("mouseout", show_all)
       .append("span")
-        .text(function(d, i) { return "+ " + d.name; })
+        .text(function(d, i) { return "(+) " + d.name; })
         .on("click",collapse_pattern_of_group)
       .select(function() { return this.parentNode; })
       .append("ul")
@@ -204,18 +218,24 @@ function onclickNode(d) {
 }
 
 function collapse_pattern_of_group(group) {
+  console.log("click: " + group.name);
     var element = document.getElementsByTagName("li");
     var counter = 0;
     for(counter = 0; counter < element.length; counter++){
 
-
-        if(element[counter].innerHTML.includes(group.name))
+        if(element[counter].children[0].innerText.endsWith(group.name))
         {
+          console.log("found");
+          console.log(element[counter].children[0].innerText);
             content = element[counter].children[1];
             if (content.style.display === "block") {
                 content.style.display = "none";
+
+                element[counter].children[0].innerText = "(+)" + element[counter].children[0].innerText.substring(3, element[counter].children[0].length);
             } else {
                 content.style.display = "block";
+
+                element[counter].children[0].innerText = "(-)" + element[counter].children[0].innerText.substring(3, element[counter].children[0].length);
             }
         }
  
