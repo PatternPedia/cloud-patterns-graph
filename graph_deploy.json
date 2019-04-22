@@ -1,0 +1,402 @@
+{
+    "nodes": [
+        {
+            "id": 101,
+            "name": "Hybrid User Interface",
+            "group": 13
+        },
+        {
+            "id": 102,
+            "name": "Hybrid Processing",
+            "group": 13
+        },
+        {
+            "id": 103,
+            "name": "Hybrid Data",
+            "group": 13
+        },
+        {
+            "id": 104,
+            "name": "Hybrid Backup",
+            "group": 13
+        },
+        {
+            "id": 105,
+            "name": "Hybrid Backend",
+            "group": 13
+        },
+        {
+            "id": 106,
+            "name": "Hybrid Application Functions",
+            "group": 13
+        },
+        {
+            "id": 107,
+            "name": "Hybrid Multimedia Web Application",
+            "group": 13
+        },
+        {
+            "id": 108,
+            "name": "Hybrid Development Environment",
+            "group": 13
+        },
+        {
+            "id": 201,
+            "name": "Two-Tier Cloud Application",
+            "group": 12
+        },
+        {
+            "id": 202,
+            "name": "Three-Tier Cloud Application",
+            "group": 12
+        },
+        {
+            "id": 203,
+            "name": "Content Distribution Network",
+            "group": 12
+        },
+        {
+            "id": 301,
+            "name": "Loose Coupling",
+            "group": 14
+        },
+        {
+            "id": 302,
+            "name": "Distributed Application",
+            "group": 14
+        },
+        {
+            "id": 401,
+            "name": "Shared Component",
+            "group": 14
+        },
+        {
+            "id": 402,
+            "name": "Tenant-isolated Component",
+            "group": 14
+        },
+        {
+            "id": 403,
+            "name": "Dedicated Component",
+            "group": 14
+        },
+        {
+            "id": 501,
+            "name": "Restricted Data Access Component",
+            "group": 13
+        },
+        {
+            "id": 502,
+            "name": "Message Move",
+            "group": 13
+        },
+        {
+            "id": 503,
+            "name": "Application Component Proxy",
+            "group": 13
+        },
+        {
+            "id": 504,
+            "name": "Compilant Data Replication",
+            "group": 14
+        },
+        {
+            "id": 505,
+            "name": "Integration Provider",
+            "group": 13
+        },
+        {
+            "id": 601,
+            "name": "Stateful Component",
+            "group": 14
+        },
+        {
+            "id": 602,
+            "name": "Stateless Component",
+            "group": 14
+        },
+        {
+            "id": 603,
+            "name": "Multi-Component Image",
+            "group": 14
+        },
+        {
+            "id": 604,
+            "name": "User Interface Component",
+            "group": 13
+        },
+        {
+            "id": 605,
+            "name": "Processing Component",
+            "group": 13
+        },
+        {
+            "id": 606,
+            "name": "Batch Processing Component",
+            "group": 13
+        },
+        {
+            "id": 607,
+            "name": "Transaction-based Component",
+            "group": 13
+        },
+        {
+            "id": 608,
+            "name": "Timeout-based Message Component",
+            "group": 13
+        },
+        {
+            "id": 609,
+            "name": "Idempoten Processor",
+            "group": 13
+        },
+        {
+            "id": 610,
+            "name": "Data Access Component",
+            "group": 13
+        },
+        {
+            "id": 611,
+            "name": "Data Abstractor",
+            "group": 13
+        },
+        {
+            "id": 701,
+            "name": "Static Workload",
+            "group": 14
+        },
+        {
+            "id": 702,
+            "name": "Periodic Workload",
+            "group": 14
+        },
+        {
+            "id": 703,
+            "name": "Once-in-a-lifetime Workload",
+            "group": 14
+        },
+        {
+            "id": 704,
+            "name": "Unpredictable Workload",
+            "group": 14
+        },
+        {
+            "id": 705,
+            "name": "Continuously Changing Workload",
+            "group": 14
+        },
+        {
+            "id": 801,
+            "name": "Infrastructure as a Service (IaaS)",
+            "group": 12
+        },
+        {
+            "id": 802,
+            "name": "Platform as a Service (PaaS)",
+            "group": 12
+        },
+        {
+            "id": 803,
+            "name": "Software as a Service (SaaS)",
+            "group": 12
+        },
+        {
+            "id": 804,
+            "name": "Public Cloud",
+            "group": 11
+        },
+        {
+            "id": 805,
+            "name": "Private Cloud",
+            "group": 11
+        },
+        {
+            "id": 806,
+            "name": "Community Cloud",
+            "group": 11
+        },
+        {
+            "id": 807,
+            "name": "Hybrid Cloud",
+            "group": 11
+        },
+        {
+            "id": 901,
+            "name": "Elastic Infrastrucure",
+            "group": 12
+        },
+        {
+            "id": 902,
+            "name": "Elastic Platfrom",
+            "group": 12
+        },
+        {
+            "id": 903,
+            "name": "Node-based Availability",
+            "group": 14
+        },
+        {
+            "id": 904,
+            "name": "Environment-based Availability",
+            "group": 14
+        },
+        {
+            "id": 1001,
+            "name": "Hypervisor",
+            "group": 12
+        },
+        {
+            "id": 1002,
+            "name": "Execution Environment",
+            "group": 12
+        },
+        {
+            "id": 1003,
+            "name": "Map Reduce",
+            "group": 13
+        },
+        {
+            "id": 1101,
+            "name": "Virtual Networking",
+            "group": 12
+        },
+        {
+            "id": 1102,
+            "name": "Message-oriented Middleware",
+            "group": 13
+        },
+        {
+            "id": 1103,
+            "name": "Exactly-once Delivery",
+            "group": 14
+        },
+        {
+            "id": 1104,
+            "name": "At-least-once Delivery",
+            "group": 14
+        },
+        {
+            "id": 1105,
+            "name": "Transaction-based Delivery",
+            "group": 14
+        },
+        {
+            "id": 1106,
+            "name": "Timeout-base Delivery",
+            "group": 14
+        },
+        {
+            "id": 1201,
+            "name": "Block Storage",
+            "group": 13
+        },
+        {
+            "id": 1202,
+            "name": "Blob Storage",
+            "group": 13
+        },
+        {
+            "id": 1206,
+            "name": "Relational Database",
+            "group": 13
+        },
+        {
+            "id": 1203,
+            "name": "Key-Value Storage",
+            "group": 13
+        },
+        {
+            "id": 1204,
+            "name": "Strict Consistency",
+            "group": 14
+        },
+        {
+            "id": 1205,
+            "name": "Eventual Consistency",
+            "group": 14
+        },
+        {
+            "id": 1301,
+            "name": "Provider Adapter",
+            "group": 13
+        },
+        {
+            "id": 1302,
+            "name": "Managed Configuration",
+            "group": 14
+        },
+        {
+            "id": 1303,
+            "name": "Elasticity Manager",
+            "group": 13
+        },
+        {
+            "id": 1304,
+            "name": "Elastic Load Balancer",
+            "group": 13
+        },
+        {
+            "id": 1305,
+            "name": "Elastic Queue",
+            "group": 13
+        },
+        {
+            "id": 1306,
+            "name": "Watchdog",
+            "group": 13
+        },
+        {
+            "id": 1307,
+            "name": "Elasticity Management Process",
+            "group": 13
+        },
+        {
+            "id": 1308,
+            "name": "Feature Flag Mangement Process",
+            "group": 14
+        },
+        {
+            "id": 1309,
+            "name": "Update Transition Process",
+            "group": 14
+        },
+        {
+            "id": 1310,
+            "name": "Standby Pooling Process",
+            "group": 13
+        },
+        {
+            "id": 1311,
+            "name": "Resiliency Mangement Process",
+            "group": 13
+        }
+    ],
+    "links": [
+        {							
+            "id":	10000,
+            "source":	701,
+            "target":	801,
+            "description":	"des"
+        }
+    ],
+    "groups": [
+        {							
+            "id":	11,
+            "name":	"Softwareumgebungseigenschaften"
+        },
+        {							
+            "id":	12,
+            "name":	"Softwareumgebung"
+        },
+        {							
+            "id":	13,
+            "name":	"Komponenten"
+        },
+        {							
+            "id":	14,
+            "name":	"Komponenteneigenschaften"
+        }
+    ],
+    "directed": false,
+    "multigraph": false
+}
