@@ -16,6 +16,8 @@ else{
   console.log("graph set choosen: " + file)
 }
 
+d3.select("#switch-pattern").append("text").text(file); 
+
 d3.json(file).then(function(graph) {
 
 var linksToCategory = graph.links.filter(function(link) { return link.target > 99; });
