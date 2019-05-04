@@ -29,6 +29,8 @@ var label = {
     'links': []
 };
 
+graph.nodes = graph.nodes.filter(node => graph.links.some(item => (item.source === node.id || item.target === node.id)));
+
 graph.nodes.forEach(function(d, i) {
     label.nodes.push({node: d});
     label.nodes.push({node: d});
